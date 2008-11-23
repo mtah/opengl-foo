@@ -23,6 +23,9 @@ bool _rotating = false;
 void initRendering() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_NORMALIZE);
 }
 
 void update(int value) {
@@ -65,6 +68,9 @@ void handleKeyPress(unsigned char key, int x, int y) {
 				_angle = _next;
 				update(180.0f);
 			}
+			break;
+		case 27:
+			exit(0);
 	}
 	
 	glutPostRedisplay();
@@ -86,6 +92,16 @@ void drawScene() {
 	glLoadIdentity();
 	glPushMatrix();
 	
+	/* ambient light */
+	GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+	
+	/* directed light */
+	GLfloat lightColor[] = {0.5f, 0.5f, 0.5f, 1.0f};
+	GLfloat lightPos[] = {1.0, 0.5f, 1.0f, 1.0f};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+	
 	glColor3f(1.0f, 1.0f, 1.0f);	// reset the color
 	
 	if (_next == &_angle1)
@@ -97,6 +113,7 @@ void drawScene() {
 	/* rectangle 1 */
 	glBegin(GL_QUADS);
 	
+	glNormal3f(0.0f, 0.0f, 1.0f);
 	glVertex3f(-0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, 0.5f, 0.0f);
@@ -118,6 +135,7 @@ void drawScene() {
 	/* rectangle 2 */
 	glBegin(GL_QUADS);
 	
+	glNormal3f(0.0f, 0.0f, 1.0f);
 	glVertex3f(-0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, 0.5f, 0.0f);
@@ -138,6 +156,7 @@ void drawScene() {
 	/* rectangle 3 */
 	glBegin(GL_QUADS);
 	
+	glNormal3f(0.0f, 0.0f, 1.0f);
 	glVertex3f(-0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, 0.5f, 0.0f);
@@ -158,6 +177,7 @@ void drawScene() {
 	/* rectangle 4 */
 	glBegin(GL_QUADS);
 	
+	glNormal3f(0.0f, 0.0f, 1.0f);
 	glVertex3f(-0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, -0.5f, 0.0f);
 	glVertex3f(0.8f, 0.5f, 0.0f);
