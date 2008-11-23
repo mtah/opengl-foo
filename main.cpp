@@ -22,6 +22,7 @@ bool _rotating = false;
 /* inits OpenGL rendering */
 void initRendering() {
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_COLOR_MATERIAL);
 }
 
 void update(int value) {
@@ -60,9 +61,13 @@ void handleKeyPress(unsigned char key, int x, int y) {
 			_next = &_angle4;
 			break;
 		case 32:
-			if (!_rotating)
+			if (!_rotating) {
+				_angle = _next;
 				update(180.0f);
+			}
 	}
+	
+	glutPostRedisplay();
 	
 }
 
@@ -81,6 +86,11 @@ void drawScene() {
 	glLoadIdentity();
 	glPushMatrix();
 	
+	glColor3f(1.0f, 1.0f, 1.0f);	// reset the color
+	
+	if (_next == &_angle1)
+		glColor3f(1.0f, 0.0f, 0.0f);
+	
 	glTranslatef(-0.85f, 0.6f, -3.0f);
 	glRotatef(_angle1, 0.0f, 1.0f, 0.0f);
 	
@@ -96,6 +106,12 @@ void drawScene() {
 	
 	glPopMatrix();	// undo the translated matrix
 	glPushMatrix();
+	
+	glColor3f(1.0f, 1.0f, 1.0f);	// reset the color
+	
+	if (_next == &_angle2)
+		glColor3f(1.0f, 0.0f, 0.0f);
+	
 	glTranslatef(0.85f, 0.6f, -3.0f); 
 	glRotatef(_angle2, 0.0f, 1.0f, 0.0f);
 	
@@ -111,6 +127,11 @@ void drawScene() {
 	glPopMatrix();	// undo the translated matrix
 	glPushMatrix();
 	
+	glColor3f(1.0f, 1.0f, 1.0f);	// reset the color
+	
+	if (_next == &_angle3)
+		glColor3f(1.0f, 0.0f, 0.0f);
+	
 	glTranslatef(-0.85f, -0.6f, -3.0f);
 	glRotatef(_angle3, 0.0f, 1.0f, 0.0f);
 	
@@ -125,6 +146,11 @@ void drawScene() {
 	glEnd();
 	glPopMatrix();	// undo the translated matrix
 	glPushMatrix();
+	
+	glColor3f(1.0f, 1.0f, 1.0f);	// reset the color
+	
+	if (_next == &_angle4)
+		glColor3f(1.0f, 0.0f, 0.0f);
 	
 	glTranslatef(0.85f, -0.6f, -3.0f);
 	glRotatef(_angle4, 0.0f, 1.0f, 0.0f); 
